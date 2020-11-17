@@ -1,0 +1,22 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - cp  STS_Assume.zip  /tmp   
+  pre_build:
+    commands:
+      - wget --quiet https://releases.hashicorp.com/terraform/0.13.3/terraform_0.13.3_linux_amd64.zip
+      - unzip terraform_0.13.3_linux_amd64.zip
+      - mv terraform /usr/local/bin
+      - rm terraform_0.13.3_linux_amd64.zip      
+  build:
+    commands:
+      - echo '-----------------------------------------------------------------------------------------'
+      - echo 'Building Custom Image For AWS Code Build'
+      - echo '-----------------------------------------------------------------------------------------'
+      - terraform init      
+      - terraform plan
+      - terraform apply -auto-approve	  
+  post_build:
+    commands:
+      - echo 'Nothing To Do In Post Build'
